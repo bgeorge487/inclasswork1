@@ -32,12 +32,7 @@ namespace AnimeNerdApp.Controllers
         // GET: AnimesController/Create
         public ActionResult Create()
         {
-            List<Anime> result = null;
-            using (AnimeContext context = new AnimeContext())
-            {
-                result = context.Anime.ToList();
-            }
-            return View(result);
+            return View();
         }
 
         // POST: AnimesController/Create
@@ -124,12 +119,8 @@ namespace AnimeNerdApp.Controllers
                 using (AnimeContext context = new AnimeContext())
                 {
                     Anime anime = context.Anime.Where(x => x.AnimeId == id).First();
-                    anime.Name = collection["Name"];
-                    anime.Genre = collection["Genre"];
-                    anime.NumberOfHusbandos = int.Parse(collection["NumberOfHusbandos"]);
-                    anime.NumberOfEpisodes = int.Parse(collection["NumberOfEpisodes"]);
-
-                    context.Anime.Update(anime);
+                
+                    context.Anime.Remove(anime);
                     context.SaveChanges();
                 }
                 return RedirectToAction(nameof(Index));
